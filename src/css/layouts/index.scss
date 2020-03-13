@@ -1,0 +1,113 @@
+body
+{
+    background-color : $main_color;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    height: 100vh;
+}
+
+
+div.currency-container
+{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    font-size: 150%;
+    margin: auto;
+    padding: 15px;
+    width: 20%;
+    background-color: $secondary_color;
+    user-select: none;
+    //_________________________________
+    img
+    { 
+        height: 30%;
+    }
+    //
+    p
+    {
+        margin-top: 20px;
+        &.price
+        {
+            margin-top: 0;
+        }
+       
+        &.shortname
+        {
+            text-transform:uppercase ;
+            font-weight: 700;
+        }
+    }
+    div.price_container
+    {
+        display: flex;
+        align-items: center;
+        margin-top: 20px;
+        justify-content: center;
+        //_____________________________
+        div.triangle
+        {
+            width: 0;
+            height: 0;
+            border-left: 5px solid transparent;
+            border-right: 5px solid transparent;
+            margin-left: 50px;
+            position: absolute;
+            //___________________________
+            &.up
+            { border-bottom: 10px solid green }
+
+            &.down
+            { border-top: 10px solid red }
+        }
+    }
+}
+
+	
+
+input 
+{
+    border: none;
+    margin-top: 80px;
+    padding-top: 20px;
+    width: 80%;
+    height: 100px;
+    color: #e8e8e8;
+    background-color: $main_color;
+    font-weight: 500;
+    font-size: 60px;
+    font-weight: 700;
+    //____________________________
+    &::placeholder
+    {
+        color: $secondary_color;
+        font-weight: 500;
+        font-size: 60px;
+        bottom: 0;
+        position: relative;
+        font-weight: 700;
+    }
+    //
+    &:focus
+    {
+        outline:none
+    }   
+}
+button
+{
+
+    width: 10%;
+    height: 50px;
+    
+}
+span.line
+{
+    background-color: $accent_color;
+    width: 80%;
+    height: 1px;
+    margin-top: 10px;
+}
