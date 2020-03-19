@@ -35,9 +35,10 @@ export default class Behavior {
             this.$els.menu.removeClass('open');
             this.$els.menu_button.removeClass('open');
             bool_open = false;
-            console.log("k");
+            // console.log("k");
             
             this.$els.menu_text.text('menu');
+            
 
         });
 

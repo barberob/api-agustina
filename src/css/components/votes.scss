@@ -4,6 +4,7 @@ div.votes
     margin-top: 15px;
     height: 50px;
     display: flex;
+    //___________________
     div.upvotes
     {
         height: 100%;
@@ -29,6 +30,7 @@ div.votes
         display: flex;
         align-items: center;
         justify-content: center;
+        //_______________________
         p
         {
             overflow: hidden;

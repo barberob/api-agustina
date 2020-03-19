@@ -1,11 +1,13 @@
 import $ from 'jquery';
+var first_currency_call = true;
+var is_on_alt_position = false;
 
 export default class Currency {
-
+    
     
     constructor() {
         
-        var selectedCurrency = 'ethereum';
+        let selectedCurrency = 'ethereum';
         this.initElements();
         this.initEvents(selectedCurrency);
     }
@@ -27,8 +29,10 @@ export default class Currency {
             upvotes : $('.js-upvotes'),
             downvotes_score : $('.js-downvotes p'),
             upvotes_score : $('.js-upvotes p'),
+            hider1 : $('div.js-transition1'),
+            hider2 : $('div.js-transition2'),
+
             
-        
         }
     }
 
@@ -43,16 +47,24 @@ export default class Currency {
 
     loadCurrency(currencyName) {
 
-        console.log('called', currencyName);
+        // console.log('called', currencyName);
 
         var settings = {
             "async": true,
             "crossDomain": true,
             "url": `https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&ids=${currencyName}&order=market_cap_desc&per_page=100&page=1&sparkline=false`,
             "method": "GET",
-           
+            beforeSend: () => {
+
+             
+
+                if(this.first_currency_call == false) {
+
+                    this.$els.hider1.addClass('showed');
+                    this.$els.hider2.addClass('showed');
+                }
+            }
         }
-        var response;
 
         $.ajax(settings).then((response) => {
 
@@ -64,7 +76,7 @@ export default class Currency {
 
     loadCurrencyInfos(currencyName) {
 
-        console.log('infocalled', currencyName);
+        // console.log('infocalled', currencyName);
         
 
         var settings = {
@@ -74,7 +86,6 @@ export default class Currency {
             "method": "GET",
            
         }
-        var response;
 
         $.ajax(settings).then((response) => {
 
@@ -138,7 +149,7 @@ export default class Currency {
 
             this.$els.downvotes_score.text('?');
             this.$els.upvotes_score.text('?');
-             this.$els.upvotes.css('width',`50%`)
+            this.$els.upvotes.css('width',`50%`)
             this.$els.downvotes.css('width',`50%`)
 
 
@@ -152,8 +163,20 @@ export default class Currency {
             this.$els.upvotes_score.text('100%');
         }
 
-        console.log('type',typeof(currencyInfos.sentiment_votes_down_percentage));
+        // console.log('type',typeof(currencyInfos.sentiment_votes_down_percentage));
+        // 
 
+        if(this.first_currency_call == false ){
+
+            setTimeout(() => {
+    
+                
+                this.$els.hider1.removeClass('showed');
+                this.$els.hider2.removeClass('showed');
+                
+            },800);
+        }
+        this.first_currency_call = false;
 
 
         
@@ -161,7 +184,7 @@ export default class Currency {
 
     changeCurrency() {
 
-        console.log('passed');
+        // console.log('passed');
         
         $('body').on('click','.js-list_item', (event) => {
                 

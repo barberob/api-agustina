@@ -1,0 +1,28 @@
+
+    <div class="currency-container">
+        <img class="logo js-logo" src="{{ this.0.image }}" alt="">
+        <p class="shortname js-shortname">{{ this.0.shortname}}</p>
+        <p class="name js-name">{{ this.0.name }}</p>
+        <div class="price_container">
+            <p class="price js-price">{{ this.0.current_price }} €</p>
+            <div class="triangle js-triangle"></div>
+        </div>
+    </div>
+
+    <div class="currency_infos">
+        <div class="infos_container">
+            <p class="rank js-rank">Market cap rank : {{ this.0.market_cap_rank }}</p>
+            <p class="low high js-low_high">High / Low 24h : {{ this.0.high_24h }} / {{ this.0.low_24h }}</p>
+        </div>
+
+
+        <p>General feeling :</p>
+        <div class="votes js-votes">
+            <div class='upvotes js-upvotes'>
+                <p>{{ this.1.sentiment_votes_up_percentage }}</p>
+            </div>
+            <div class="downvotes js-downvotes">
+                <p>{{ this.1.sentiment_votes_down_percentage }}</p>
+            </div>
+        </div>
+    </div>
