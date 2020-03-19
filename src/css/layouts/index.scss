@@ -14,6 +14,10 @@ body
     {
         color: $accent_color;
     }
+    p 
+    {
+        opacity: 0.8;
+    }
 }
 
 span.line
@@ -38,6 +42,16 @@ div.allCurrency-container
         margin-left: 50px;
         width: 50%;
         //__________
+        >p:not(:first-of-type)
+        {
+            margin-top: 20px;
+        }
+        //
+        div.infos_container
+        {
+            display: flex;
+            justify-content: space-between ;
+        }
         
     }
     //
@@ -89,8 +103,8 @@ div.allCurrency-container
                 height: 0;
                 border-left: 5px solid transparent;
                 border-right: 5px solid transparent;
-                margin-left: 50px;
-                position: absolute;
+                margin-left: 10px;
+                // position: absolute;
                 //___________________________
                 &.up
                 { border-bottom: 10px solid $pastel_green }
@@ -102,42 +116,21 @@ div.allCurrency-container
     }
 }
 
-	
-form    
+div.transition
 {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    //_____________________
-    input
+    width: 0%;
+    height: 100vh;
+    position: absolute;
+    z-index: 2;
+    left: 50%;
+    background-color: $accent_color;
+    transition: 1s ease-in-out;
+    transform-origin: center;
+    &.open
     {
-        border: none;
-        margin-top: 80px;
-        padding-top: 20px;
-        width: 80%;
-        height: 100px;
-        color: #e8e8e8;
-        background-color: transparent;
-        font-weight: 500;
-        font-size: 60px;
-        font-weight: 700;
-        border: none;
-        //____________________________
-        &::placeholder
-        {
-            color: $secondary_color;
-            font-weight: 500;
-            font-size: 60px;
-            bottom: 0;
-            position: relative;
-            font-weight: 700;
-        }
-        //
-        &:focus
-        {
-            outline:none;
-        }   
+        width: 100%;
+        left: 0;
+        transition: 1s ease-in-out;
+        transform-origin: center;
     }
 }
-
-

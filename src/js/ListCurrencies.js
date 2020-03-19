@@ -38,19 +38,21 @@ export default class ListCurrencyies {
         $.ajax(settings).done( (response) => {
 
             $(response).each((i,item) => {
+
 				this.renderItems(item);
             })
             
-
         });
     }
 
-        
+   
+
     renderItems(item) {
 
         var rendered = Items(item);
         $('.side_menu').append(rendered);
 
-
     }
+
+
 }

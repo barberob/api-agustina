@@ -3,8 +3,6 @@ import $ from 'jquery';
 export default class Currency {
 
     
-
- 
     constructor() {
         
         var selectedCurrency = 'ethereum';

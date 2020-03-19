@@ -13,6 +13,12 @@ div.votes
         display: flex;
         align-items: center;
         justify-content: center;
+        p
+        {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
     }
     div.downvotes
     {
@@ -23,6 +29,10 @@ div.votes
         display: flex;
         align-items: center;
         justify-content: center;
-
+        p
+        {
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
     }
 }
