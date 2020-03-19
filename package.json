@@ -33,6 +33,9 @@
     "webpack-dev-server": "^3.10.3"
   },
   "dependencies": {
-    "jquery": "^3.4.1"
+    "handlebars": "^4.7.3",
+    "handlebars-loader": "^1.7.1",
+    "jquery": "^3.4.1",
+    "mustache": "^4.0.1"
   }
 }

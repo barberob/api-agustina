@@ -1,0 +1,28 @@
+div.votes
+{
+    width: 100%;
+    margin-top: 15px;
+    height: 50px;
+    display: flex;
+    div.upvotes
+    {
+        height: 100%;
+        background-color: $pastel_green;
+        width: 50%;
+        transition: 500ms ease-in-out;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    div.downvotes
+    {
+        height: 100%;
+        background-color: $pastel_red;
+        width: 50%;
+        transition: 500ms ease-in-out; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+    }
+}

@@ -1,9 +1,11 @@
 import '../css/app.scss';
 import Currency from './Currency';
-import AutoComplete from './AutoComplete.js';
+import Behavior from './Behavior';
+import ListCurrencies from './ListCurrencies';
 
 
 class App {
+  
     constructor () {
         this.initApp();      
     }
@@ -11,7 +13,8 @@ class App {
     initApp () {
       // Start application
       new Currency();
-      new AutoComplete();
+      new Behavior();
+      new ListCurrencies();
     }
 }
 

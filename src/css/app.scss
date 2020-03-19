@@ -1,14 +1,11 @@
+
 // Config
-@import "config/reset";
-// @import "config/font-face";
-@import "config/variables";
-// @import "config/mixins";
-// @import "config/global";
+    @import "config/reset";
+    @import "config/variables";
 
 // Layouts
-@import "layouts/index";
+    @import "layouts/index";
 
 // Components
-// @import "components/background";
-// @import "components/greeting";
-// @import "components/quote";
+    @import "components/menu";
+    @import "components/votes";
