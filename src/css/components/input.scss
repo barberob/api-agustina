@@ -1,0 +1,20 @@
+input 
+{
+    background: none;
+    color : white;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 400;
+    font-size: 1.5em;
+    line-height: 1.2;
+    border: none;
+    width: 80%;
+    // margin-left: auto;
+    // margin-right: auto;
+    // margin-top: 20px;
+    margin: 20px auto;
+    border-bottom: 1px solid white;
+    &:focus
+    {
+        outline: none;
+    }
+}

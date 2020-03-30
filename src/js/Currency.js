@@ -34,7 +34,7 @@ export default class Currency {
             hider1 : $('div.js-transition1'),
             hider2 : $('div.js-transition2'),
             hiders : $('div.js-transition1, div.js-transition2'),
-            currency_container : $('div.all_infos_container')
+            currency_container : $('div.js-all_infos_container')
         }
     }
 
@@ -42,7 +42,6 @@ export default class Currency {
     initEvents(selectedCurrency) {
 
         this.loadCurrency(selectedCurrency);     
-        this.loadCurrencyInfos(selectedCurrency);
         this.changeCurrency();
     }
 
@@ -50,34 +49,30 @@ export default class Currency {
     loadCurrency(currencyName) {
 
         actualCurrency = currencyName;
-        var settings = {
+        var first_settings = {
             "async": true,
             "crossDomain": true,
             "url": `https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&ids=${currencyName}&order=market_cap_desc&per_page=100&page=1&sparkline=false`,
             "method": "GET",
         }
-
-        $.ajax(settings).then((response) => {
-
-            this.renderCurrency(response[0]);
-        });
-    }
-
-    loadCurrencyInfos(currencyName) {
-
-        var settings = {
+        var second_settings = {
             "async": true,
             "crossDomain": true,
             "url": `https://api.coingecko.com/api/v3/coins/${currencyName}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false`,
             "method": "GET",       
         }
 
-        $.ajax(settings).then((response) => {
+        $.ajax(first_settings).then((response) => {
 
-            this.renderCurrencyInfos(response);
+            this.renderCurrency(response[0]);
+            
+            
+            $.ajax(second_settings).then((response) => {
+                
+                this.renderCurrencyInfos(response);
+            });
         });
     }
-
 
     renderCurrency(currencyValues) {
 
@@ -107,8 +102,6 @@ export default class Currency {
     }
 
     renderCurrencyInfos(currencyInfos) {
-
-        
 
         if(typeof(currencyInfos.sentiment_votes_up_percentage) != 'number') {
             this.$els.downvotes_score.text('?');
@@ -167,6 +160,7 @@ export default class Currency {
         $('body').on('click','.js-list_item', (event) => {
    
             let selected = $(event.currentTarget).attr('data-id');
+
             if(selected != actualCurrency) {
 
                 this.$els.hiders.animate({
@@ -174,8 +168,6 @@ export default class Currency {
                 }, 500, () => {
                     
                     this.loadCurrency(selected);
-                    this.loadCurrencyInfos(selected);
-                    
                     this.$els.currency_container.animate({
                         opacity : 0 ,
                         marginBottom : '-=150px'

@@ -25,7 +25,8 @@ div.side_menu
 		position: sticky;
 		bottom: 0;
         margin-top: 50px;
-		content:" ";	
+        content:" ";	
+
 	}
     //_________________________________
     div.list_item
@@ -35,6 +36,7 @@ div.side_menu
         width: 100%;
         cursor: pointer;
         user-select: none;
+        padding: 10px 0;
         &:last-of-type
         {
             padding-bottom: 8000px;
