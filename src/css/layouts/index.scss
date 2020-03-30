@@ -1,8 +1,13 @@
 body
 {
-    background-color : $main_color;
-    color: white;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    background: $gradient_1;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to left, $gradient_1, $gradient_2);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to left, $gradient_1, $gradient_2); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+
+    color : white;
+    font-family: 'Baloo 2', cursive;
+    font-weight: 400;
+    font-size: 1.5em;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -10,14 +15,6 @@ body
     line-height: 1.2;
     overflow: hidden;
     //____________________
-    a
-    {
-        color: $accent_color;
-    }
-    p 
-    {
-        opacity: 0.8;
-    }
 }
 
 span.line
@@ -28,14 +25,30 @@ span.line
     margin-top: 25vh;
 }
 
-div.allCurrency-container
+span.green
+{ color: $pastel_green; }
+span.red 
+{ color: $pastel_red; }
+
+div.all_infos_container
 {
     display: flex;
     justify-content: space-evenly;
     align-self: center;
+    align-items: center;
     margin: auto;
     width: 90%;
     //________________________
+    div.line
+    {
+        height: 100px;
+        width: 2px;
+        background-color: white;
+        position: absolute;
+        right: 50%;
+        transform: translateX(2px);
+        
+    }
     div.currency_infos
     {
         font-size: 105%;
@@ -47,15 +60,20 @@ div.allCurrency-container
             margin-top: 20px;
         }
         //
-        div.infos_container
-        {
-            display: flex;
-            justify-content: space-between ;
-        }
-        
+    }
+    div.infos_container
+    {
+        display: flex;
+        justify-content: space-between;
+        flex-direction: column;
+        height: 70%;
+    }
+    p.feeling 
+    {
+        margin-top: 20%;
     }
     //
-    div.currency-container
+    div.currency_container
     {
         display: flex;
         flex-direction: column;
@@ -65,8 +83,10 @@ div.allCurrency-container
         border-radius: 2%;
         padding: 15px;
         width: 20%;
-        background-color: $secondary_color;
+        background-color: rgba(255, 255, 255, 0.100);
         user-select: none;
+        margin-bottom: 0;
+        
         //_________________________________
         img
         { 
@@ -116,51 +136,3 @@ div.allCurrency-container
     }
 }
 
-div.transition1
-{
-    width: 0%;
-    height: 50vh;
-    position: absolute;
-    z-index: 2;
-    top: 0;
-    right: 0;
-    background-color: black;
-    transition: 1s ease-in-out;
-    transform-origin: center;
-    &.showed
-    {
-        width: 100%;     
-        transition: 0.5s ease-in-out;
-        transform-origin: right;
-    }
-    // &.hided_alt
-    // {
-    //     right: 100%;
-    //     background-color: #fff;
-    // }
-}
-
-
-div.transition2
-{
-    width: 0%;
-    height: 50vh;
-    position: absolute;
-    z-index: 2;
-    bottom: 0;
-    left: 0;
-    background-color: black;
-    transition: 1s ease-in-out;
-    transform-origin: center;
-    &.showed
-    {
-        width: 100%;     
-        transition: 0.5s ease-in-out;
-        transform-origin: left;
-    }
-    // &.hided_alt
-    // {
-    //     left: 100%;
-    //     background-color: #fff;
-    // }
-}

@@ -18,7 +18,8 @@ export default class Behavior {
             menu_button : $('div.js-menu_button'),
             menu : $('div.js-side_menu'),
             menu_text : $('p.js-menu_text'),
-            list_item : $('.js-list_item')
+            list_item : $('.js-list_item'),
+            body : $('body')
 
         }
     }
@@ -36,7 +37,6 @@ export default class Behavior {
             this.$els.menu_button.removeClass('open');
             bool_open = false;
             // console.log("k");
-            
             this.$els.menu_text.text('menu');
             
 
@@ -50,8 +50,8 @@ export default class Behavior {
                 this.$els.menu_button.addClass('open');
                 this.$els.menu_text.text('close');
                 bool_open = true;
-            }
-            else {
+
+            } else {
                 
                 this.$els.menu.removeClass('open');
                 this.$els.menu_button.removeClass('open');

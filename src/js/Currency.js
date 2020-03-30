@@ -1,9 +1,11 @@
 import $ from 'jquery';
-var first_currency_call = true;
-var is_on_alt_position = false;
+import formatNumber from './helpers/numberFormating'
+var actualCurrency;
+let currencyDone = false;
+let currencyInfosDone = false;
+
 
 export default class Currency {
-    
     
     constructor() {
         
@@ -11,28 +13,28 @@ export default class Currency {
         this.initElements();
         this.initEvents(selectedCurrency);
     }
-    
-
 
     initElements() {
 
         this.$els = {
 
-            logo : $('.js-logo'),
-            shortname : $('.js-shortname'),
-            name : $('.js-name'),
-            price : $('.js-price'),
-            triangle : $('.js-triangle'),
-            description : $('.js-description'),
-            rank : $('.js-rank'),
-            downvotes : $('.js-downvotes'),
-            upvotes : $('.js-upvotes'),
-            downvotes_score : $('.js-downvotes p'),
-            upvotes_score : $('.js-upvotes p'),
+            logo : $('img.js-logo'),
+            shortname : $('p.js-shortname'),
+            name : $('p.js-name'),
+            price : $('p.js-price'),
+            triangle : $('div.js-triangle'),
+            rank : $('p.js-rank'),
+            downvotes : $('div.js-downvotes'),
+            upvotes : $('div.js-upvotes'),
+            downvotes_score : $('div.js-downvotes p'),
+            upvotes_score : $('div.js-upvotes p'),
+            supply : $('p.js-supply'),
+            high : $('p.js-high_low span.green'),
+            low : $('p.js-high_low span.red'),
             hider1 : $('div.js-transition1'),
             hider2 : $('div.js-transition2'),
-
-            
+            hiders : $('div.js-transition1, div.js-transition2'),
+            currency_container : $('div.all_infos_container')
         }
     }
 
@@ -47,50 +49,32 @@ export default class Currency {
 
     loadCurrency(currencyName) {
 
-        // console.log('called', currencyName);
-
+        actualCurrency = currencyName;
         var settings = {
             "async": true,
             "crossDomain": true,
             "url": `https://api.coingecko.com/api/v3/coins/markets?vs_currency=eur&ids=${currencyName}&order=market_cap_desc&per_page=100&page=1&sparkline=false`,
             "method": "GET",
-            beforeSend: () => {
-
-             
-
-                if(this.first_currency_call == false) {
-
-                    this.$els.hider1.addClass('showed');
-                    this.$els.hider2.addClass('showed');
-                }
-            }
         }
 
         $.ajax(settings).then((response) => {
 
             this.renderCurrency(response[0]);
         });
-
-        
     }
 
     loadCurrencyInfos(currencyName) {
-
-        // console.log('infocalled', currencyName);
-        
 
         var settings = {
             "async": true,
             "crossDomain": true,
             "url": `https://api.coingecko.com/api/v3/coins/${currencyName}?localization=false&tickers=false&market_data=false&community_data=false&developer_data=false&sparkline=false`,
-            "method": "GET",
-           
+            "method": "GET",       
         }
 
         $.ajax(settings).then((response) => {
 
             this.renderCurrencyInfos(response);
-            
         });
     }
 
@@ -100,22 +84,23 @@ export default class Currency {
         this.$els.logo.attr('src', currencyValues.image);
         this.$els.shortname.text(currencyValues.symbol);
         this.$els.name.text(currencyValues.name);
-        this.$els.price.text(currencyValues.current_price);
-
-       
+        this.$els.price.text(formatNumber(currencyValues.current_price) + '€');
+        this.$els.supply.text("Circulating supply : " + formatNumber(currencyValues.circulating_supply));
+        this.$els.high.text(formatNumber(currencyValues.high_24h) + '€');
+        this.$els.low.text(formatNumber(currencyValues.low_24h) + '€');
         //style
-        let price_change = (currencyValues.price_change_24h);
+        let price_change = currencyValues.price_change_24h;
         if (price_change > 0) {
-            this.$els.price.css('color','green');
+            this.$els.price.css('color','#4ec44e');
             this.$els.triangle.removeClass('down');
             this.$els.triangle.addClass('up');
 
-        } else if (price_change < 0){
-            this.$els.price.css('color','red');
+        } else if (price_change < 0) {
+            this.$els.price.css('color','#ff716a');
             this.$els.triangle.removeClass('up');
             this.$els.triangle.addClass('down');
 
-        } else{
+        } else {
             this.$els.prce.css('color','white');
             this.$els.triangle.css('display','none');
         }
@@ -123,18 +108,13 @@ export default class Currency {
 
     renderCurrencyInfos(currencyInfos) {
 
-        this.$els.rank.html("Market cap rank: " + currencyInfos.market_cap_rank);
-
-        this.$els.upvotes.css('width',`${currencyInfos.sentiment_votes_up_percentage}%`)
-        this.$els.downvotes.css('width',`${currencyInfos.sentiment_votes_down_percentage}%`)
-
+        
 
         if(typeof(currencyInfos.sentiment_votes_up_percentage) != 'number') {
             this.$els.downvotes_score.text('?');
             this.$els.upvotes_score.text('?');
             this.$els.upvotes.css('width',`50%`)
             this.$els.downvotes.css('width',`50%`)
-
 
         }else if( currencyInfos.sentiment_votes_up_percentage != 0) {
 
@@ -143,6 +123,7 @@ export default class Currency {
             this.$els.downvotes_score.text('100%');
             this.$els.upvotes_score.text(' ');
         }
+
         //___________________________________
 
          if(typeof(currencyInfos.sentiment_votes_down_percentage) != 'number') {
@@ -162,39 +143,47 @@ export default class Currency {
             this.$els.downvotes_score.text('');
             this.$els.upvotes_score.text('100%');
         }
+        
+        this.$els.rank.html("Market cap rank : " + currencyInfos.market_cap_rank);
 
-        // console.log('type',typeof(currencyInfos.sentiment_votes_down_percentage));
-        // 
+        this.$els.upvotes.css('width',`${currencyInfos.sentiment_votes_up_percentage}%`)
+        this.$els.downvotes.css('width',`${currencyInfos.sentiment_votes_down_percentage}%`)
 
-        if(this.first_currency_call == false ){
-
-            setTimeout(() => {
-    
-                
-                this.$els.hider1.removeClass('showed');
-                this.$els.hider2.removeClass('showed');
-                
-            },800);
-        }
-        this.first_currency_call = false;
+        
 
 
+        this.$els.hiders.delay(500).animate({
+            height : '0vh'
+        }, 750);
+        this.$els.currency_container.delay(500).animate({
+            opacity : 1,
+            marginBottom : '0'
+        },750);
         
     }
 
     changeCurrency() {
-
-        // console.log('passed');
         
         $('body').on('click','.js-list_item', (event) => {
-                
+   
             let selected = $(event.currentTarget).attr('data-id');
-           
-            this.loadCurrency(selected);
-            this.loadCurrencyInfos(selected);
-        
+            if(selected != actualCurrency) {
+
+                this.$els.hiders.animate({
+                height : '50vh'
+                }, 500, () => {
+                    
+                    this.loadCurrency(selected);
+                    this.loadCurrencyInfos(selected);
+                    
+                    this.$els.currency_container.animate({
+                        opacity : 0 ,
+                        marginBottom : '-=150px'
+                    },0);
+                }
+                );   
+
+            }
         });        
     }
-
-
 }
