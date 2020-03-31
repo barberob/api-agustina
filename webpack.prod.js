@@ -25,6 +25,10 @@ config = {
                 use: 'html-loader'
             },
             {
+                test: /\.hbs$/,
+                use: 'handlebars-loader'
+            }, 
+            {
                 test: /\.js$/,
                 exclude: /node_modules/,
                 use: {
