@@ -1,5 +1,9 @@
-body
-{
+
+html {
+    min-height: 100vh;
+}
+
+body {
     background: $gradient_1;
     background: -webkit-linear-gradient(to left, $gradient_1, $gradient_2); 
     background: linear-gradient(to left, $gradient_1, $gradient_2); 
@@ -12,15 +16,14 @@ body
     flex-direction: column;
     align-items: center;
     height: 100vh;
+    min-height: 100vh;
     width: 100%;
     line-height: 1.2;
     overflow: hidden;
     user-select: none;
-    //____________________
 }
 
-span.line
-{
+span.line {
     width: 80%;
     height: 2px;
     background-color: $accent_color;
@@ -32,8 +35,8 @@ span.green
 span.red 
 { color: $pastel_red; }
 
-div.all_infos_container
-{
+
+div.all_infos_container {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -41,28 +44,23 @@ div.all_infos_container
   
     //________________________
     
-    div.currency_infos
-    {
-        >p:not(:first-of-type)
-        {
+    div.currency_infos {
+        >p:not(:first-of-type) {
             margin-top: 20px;
         }
         //
     }
-    div.infos_container
-    {
+    div.infos_container {
         display: flex;
         justify-content: space-between;
         flex-direction: column;
         height: 70%;
     }
-    p.feeling 
-    {
+    p.feeling {
         margin-top: 20%;
     }
     //
-    div.currency_container
-    {
+    div.currency_container {
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -77,37 +75,31 @@ div.all_infos_container
         margin-right: 20%;
         
         //_________________________________
-        img
-        { 
+        img { 
             height: 100px;
             width: 100px;
         }
         //
-        p
-        {
+        p {
             margin-top: 20px;
             //________________
-            &.price
-            {
+            &.price {
                 margin-top: 0;
             }
            
-            &.shortname
-            {
+            &.shortname {
                 text-transform:uppercase ;
                 font-weight: 700;
             }
         }
         // 
-        div.price_container
-        {
+        div.price_container {
             display: flex;
             align-items: center;
             margin-top: 20px;
             justify-content: center;
             //_____________________________
-            div.triangle
-            {
+            div.triangle {
                 width: 0;
                 height: 0;
                 border-left: 5px solid transparent;
@@ -125,10 +117,6 @@ div.all_infos_container
     }
 }
 
-@media all and (max-width : 1536px) {
-
- 
-}
 
 @media all and (max-width : 1440px) {
 
@@ -138,7 +126,6 @@ div.all_infos_container
         
     }
 }
-
 
 @media all and (max-width : 980px) {
 
@@ -156,44 +143,16 @@ div.all_infos_container
             width: 60%;
             margin-bottom: 25px;
             margin-right: 0;
+            font-size: 150%;
         }
 
         div.infos_container p {
             margin-bottom: 25px;
-        }
-        
-    }
-}
-
-
-@media all and (max-width : 980px) {
-
-    div.all_infos_container {
-
-        div.currency_container {
-    
-            font-size: 150%;
-        }   
-        div.infos_container {
             text-align: center;
-            p {
-                margin-left: 50px;
-                margin-right: 50px;
-            }
-        }
-    
-        
-    }
-}
-
-
-@media all and (max-width : 768px) {
- 
-    div.all_infos_container {
-        
-        div.infos_container {
-
-            
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+       
         }
     }
 }

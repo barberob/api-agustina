@@ -1,6 +1,5 @@
 
-div.side_menu
-{
+div.side_menu {
     height: 100vh;
     width: 20vw;
     position: fixed;
@@ -17,13 +16,11 @@ div.side_menu
     z-index: 1;
 
     //______________
-    &.open
-    {
+    &.open {
         transform: translateX(0%);
         transition: 0.5s ease-in-out;
     }
-    &::after
-	{
+    &::after {
         position: sticky;
 		bottom: 0;
         margin-top: 50px;
@@ -31,8 +28,7 @@ div.side_menu
     }
     //_________________________________
     
-    div.list_item
-    {
+    div.list_item {
         display: flex;
         align-items: center;
         width: 100%;
@@ -41,13 +37,11 @@ div.side_menu
         padding: 10px 0;
         transition: 1s ease-in-out;
         //_______________________________
-        div.image_container
-        {
+        div.image_container {
             width: 50px;
             margin-left: 25px;
             //
-            img
-            {
+            img {
                 width: 25px;
                 height: 25px;
             }
@@ -57,8 +51,7 @@ div.side_menu
 }
 
 
-div.button_container
-{
+div.button_container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -68,13 +61,11 @@ div.button_container
     position: fixed;
     z-index: 2;
     //_______________________
-    p 
-    {
+    p {
         position: relative;
      
     }
-    div.menu_button
-    {
+    div.menu_button {
         width: 30px;
         height: 30px;     
         border-radius: 5%;
@@ -85,8 +76,7 @@ div.button_container
         position: absolute;
         
         //________________________________
-        &.open
-        {   
+        &.open {   
             border-radius: 50%;
             border: none;
             background-color: $accent_color;
@@ -98,23 +88,17 @@ div.button_container
 
 @media all and (max-width : 1536px) {
 
-    div.side_menu
-    {
+    div.side_menu {
         width: 25vw;
-        div.list_item
-        {
+        div.list_item {
             //_______________________________
-            div.image_container
-            {
+            div.image_container {
                 margin-left: 35px;
             }
-            p 
-            {
+            p {
                 font-size: 110%;
             }
-
         }
-    
     }
 }
 
@@ -136,8 +120,7 @@ div.button_container
             bottom: -10px;
         }
     }
-    div.side_menu
-    {
+    div.side_menu {
         width: 40vw;
     }
 }
@@ -148,8 +131,7 @@ div.button_container
         bottom: -20px;
     }
 
-    div.side_menu
-    {
+    div.side_menu {
         width: 100vw;
         padding-top: 100px;
     }

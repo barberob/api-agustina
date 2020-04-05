@@ -1,5 +1,4 @@
-input 
-{
+input {
     background: none;
     color : white;
     font-family: 'Baloo 2', cursive;
@@ -10,12 +9,10 @@ input
     width: 80%;
     margin: 20px auto;
     border-bottom: 1px solid rgba(255, 255, 255, 0.459);
-    &:focus
-    {
+    &:focus {
         outline: none;
     }
-    &::placeholder
-    {
+    &::placeholder {
         color: white;
         opacity: 0.3;
     }

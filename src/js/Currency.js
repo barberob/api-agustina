@@ -6,9 +6,10 @@ export default class Currency {
     
     constructor() {
         
-        let selectedCurrency = 'loopring';
+        let selectedCurrency = 'bitcoin';
         this.initElements();
         this.initEvents(selectedCurrency);
+        
     }
 
     initElements() {
@@ -28,24 +29,22 @@ export default class Currency {
             supply : $('p.js-supply'),
             high : $('p.js-high_low span.green'),
             low : $('p.js-high_low span.red'),
-            hider1 : $('div.js-transition1'),
-            hider2 : $('div.js-transition2'),
             hiders : $('div.js-transition1, div.js-transition2'),
             currency_container : $('div.js-all_infos_container')
         }
     }
 
-
     initEvents(selectedCurrency) {
 
         this.loadCurrency(selectedCurrency);     
-        this.changeCurrency();
+        this.watchCurrencyChange();
     }
-
-
+    
     loadCurrency(currencyName) {
-
+        
+       
         actualCurrency = currencyName;
+
         var first_settings = {
             "async": true,
             "crossDomain": true,
@@ -61,43 +60,25 @@ export default class Currency {
 
         $.ajax(first_settings).then((response) => {
 
-            this.renderCurrency(response[0]);
+            let first_response = response[0];
             
-            $.ajax(second_settings).then((response) => {
+            $.ajax(second_settings).then((second_response) => {
                 
-                this.renderCurrencyInfos(response);
+                this.renderCurrency(first_response, second_response);
             });
         });
     }
 
-    renderCurrency(currencyValues) {
+    renderCurrency(currencyValues, currencyInfos) {
 
-        this.$els.logo.attr('src', currencyValues.image);
-        this.$els.shortname.text(currencyValues.symbol);
-        this.$els.name.text(currencyValues.name);
-        this.$els.price.text(formatNumber(currencyValues.current_price) + '€');
-        this.$els.supply.text("Circulating supply : " + formatNumber(currencyValues.circulating_supply));
-        this.$els.high.text(formatNumber(currencyValues.high_24h) + '€');
-        this.$els.low.text(formatNumber(currencyValues.low_24h) + '€');
-        //style
-        let price_change = currencyValues.price_change_24h;
-        if (price_change > 0) {
-            this.$els.price.css('color','#4ec44e');
-            this.$els.triangle.removeClass('down');
-            this.$els.triangle.addClass('up');
-
-        } else if (price_change < 0) {
-            this.$els.price.css('color','#ff716a');
-            this.$els.triangle.removeClass('up');
-            this.$els.triangle.addClass('down');
-
-        } else {
-            this.$els.prce.css('color','white');
-            this.$els.triangle.css('display','none');
-        }
+        this.$els.rank.html("Market cap rank : " + currencyInfos.market_cap_rank);
+        this.renderCurrencyValues(currencyValues);
+        this.renderCurrencyPrice(currencyValues);
+        this.renderCurrencyVotes(currencyInfos);
+        this.animateOnceRendered();
     }
 
-    renderCurrencyInfos(currencyInfos) {
+    renderCurrencyVotes(currencyInfos) {
 
         let up = currencyInfos.sentiment_votes_up_percentage;
         let down = currencyInfos.sentiment_votes_down_percentage;
@@ -121,37 +102,68 @@ export default class Currency {
             this.$els.upvotes.css('width',`${up}%`);
             this.$els.downvotes.css('width',`${down}%`);
         }
-
-       
-        this.$els.rank.html("Market cap rank : " + currencyInfos.market_cap_rank);
-
-        this.animateOnceRendered();
-        
     }
 
-    changeCurrency() {
-        
-        $('body').on('click','.js-list_item', (event) => {
-   
-            let selected = $(event.currentTarget).attr('data-id');
+    renderCurrencyValues(currencyValues) {
 
+        this.$els.logo.attr('src', currencyValues.image);
+        this.$els.shortname.text(currencyValues.symbol);
+        this.$els.name.text(currencyValues.name);
+        this.$els.price.text(formatNumber(currencyValues.current_price) + '€');
+        this.$els.supply.text("Circulating supply : " + formatNumber(currencyValues.circulating_supply));
+        this.$els.high.text(formatNumber(currencyValues.high_24h) + '€');
+        this.$els.low.text(formatNumber(currencyValues.low_24h) + '€');
+    }
+
+    renderCurrencyPrice(currencyValues) {
+
+        let price_change = currencyValues.price_change_24h;
+
+        if (price_change > 0) {
+
+            this.$els.price.css('color','#4ec44e');
+            this.$els.triangle.removeClass('down');
+            this.$els.triangle.addClass('up');
+
+        } else if (price_change < 0) {
+
+            this.$els.price.css('color','#ff716a');
+            this.$els.triangle.removeClass('up');
+            this.$els.triangle.addClass('down');
+
+        } else {
+
+            this.$els.prce.css('color','white');
+            this.$els.triangle.css('display','none');
+        }
+    }
+
+    watchCurrencyChange() {
+
+        $('body').on('click','.js-list_item', (event) => {
+             
+            var selected = $(event.currentTarget).attr('data-id');
             if(selected != actualCurrency) {
 
-                this.$els.hiders.animate({
-                height : '50vh'
-                }, 500, () => {
-                    
-                    this.loadCurrency(selected);
-
-                    this.$els.currency_container.animate({
-                        opacity : 0 ,
-                        marginBottom : '-=150px'
-                    },0);
-                }
-                );   
-
+                this.changeCurrency(selected);
             }
-        });        
+        });   
+    }
+
+    changeCurrency(currencyName) {
+         
+        this.$els.hiders.animate({
+        height : '50vh'
+        }, 500, () => {
+            
+            this.loadCurrency(currencyName);
+
+            this.$els.currency_container.animate({
+                opacity : 0 ,
+                marginTop : '+=150px'
+            },0);
+        }
+        );        
     }
 
     animateOnceRendered() {
@@ -161,7 +173,7 @@ export default class Currency {
         }, 750);
         this.$els.currency_container.delay(500).animate({
             opacity : 1,
-            marginBottom : '0'
+            marginTop : '0'
         },750);
     }
 }

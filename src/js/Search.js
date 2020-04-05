@@ -4,20 +4,9 @@ export default class Search {
 
     constructor() {
 
-        this.initElements();
         this.initEvents();
     }
 
-    initElements() {
-
-        this.$els = {
-
-            items_container : $('.js-list_item'),
-            items_name : $('.js-list_item p.js-item_name'),
-            search : $('js-search')
-        }
-    }
-    
     initEvents() {
         
         this.sortCurrencyByName();
