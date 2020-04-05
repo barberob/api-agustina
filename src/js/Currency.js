@@ -1,15 +1,12 @@
 import $ from 'jquery';
 import formatNumber from './helpers/numberFormating'
 var actualCurrency;
-let currencyDone = false;
-let currencyInfosDone = false;
-
 
 export default class Currency {
     
     constructor() {
         
-        let selectedCurrency = 'ethereum';
+        let selectedCurrency = 'loopring';
         this.initElements();
         this.initEvents(selectedCurrency);
     }
@@ -66,7 +63,6 @@ export default class Currency {
 
             this.renderCurrency(response[0]);
             
-            
             $.ajax(second_settings).then((response) => {
                 
                 this.renderCurrencyInfos(response);
@@ -103,55 +99,33 @@ export default class Currency {
 
     renderCurrencyInfos(currencyInfos) {
 
-        if(typeof(currencyInfos.sentiment_votes_up_percentage) != 'number') {
-            this.$els.downvotes_score.text('?');
-            this.$els.upvotes_score.text('?');
-            this.$els.upvotes.css('width',`50%`)
-            this.$els.downvotes.css('width',`50%`)
+        let up = currencyInfos.sentiment_votes_up_percentage;
+        let down = currencyInfos.sentiment_votes_down_percentage;
 
-        }else if( currencyInfos.sentiment_votes_up_percentage != 0) {
-
-            this.$els.upvotes_score.text(`${currencyInfos.sentiment_votes_up_percentage}%`);
-        }else{
-            this.$els.downvotes_score.text('100%');
-            this.$els.upvotes_score.text(' ');
-        }
-
-        //___________________________________
-
-         if(typeof(currencyInfos.sentiment_votes_down_percentage) != 'number') {
+        if(typeof(up) != 'number' || typeof(down) != 'number') {
 
             this.$els.downvotes_score.text('?');
             this.$els.upvotes_score.text('?');
-            this.$els.upvotes.css('width',`50%`)
-            this.$els.downvotes.css('width',`50%`)
+            this.$els.upvotes.css('width',`50%`);
+            this.$els.downvotes.css('width',`50%`);
 
+        }else if(up != 0 || down != 0) {
 
-        }else if( currencyInfos.sentiment_votes_down_percentage != 0) {
-
-            this.$els.downvotes_score.text(`${currencyInfos.sentiment_votes_down_percentage}%`);
-
-        }else{
-
-            this.$els.downvotes_score.text('');
-            this.$els.upvotes_score.text('100%');
+            this.$els.upvotes_score.text(`${up}%`);
+            this.$els.downvotes_score.text(`${down}%`);
+            this.$els.upvotes.css('width',`${up}%`);
+            this.$els.downvotes.css('width',`${down}%`);
+            
+        }else {
+            
+            this.$els.upvotes.css('width',`${up}%`);
+            this.$els.downvotes.css('width',`${down}%`);
         }
-        
+
+       
         this.$els.rank.html("Market cap rank : " + currencyInfos.market_cap_rank);
 
-        this.$els.upvotes.css('width',`${currencyInfos.sentiment_votes_up_percentage}%`)
-        this.$els.downvotes.css('width',`${currencyInfos.sentiment_votes_down_percentage}%`)
-
-        
-
-
-        this.$els.hiders.delay(500).animate({
-            height : '0vh'
-        }, 750);
-        this.$els.currency_container.delay(500).animate({
-            opacity : 1,
-            marginBottom : '0'
-        },750);
+        this.animateOnceRendered();
         
     }
 
@@ -168,6 +142,7 @@ export default class Currency {
                 }, 500, () => {
                     
                     this.loadCurrency(selected);
+
                     this.$els.currency_container.animate({
                         opacity : 0 ,
                         marginBottom : '-=150px'
@@ -177,5 +152,16 @@ export default class Currency {
 
             }
         });        
+    }
+
+    animateOnceRendered() {
+  
+        this.$els.hiders.delay(500).animate({
+            height : '0vh'
+        }, 750);
+        this.$els.currency_container.delay(500).animate({
+            opacity : 1,
+            marginBottom : '0'
+        },750);
     }
 }
