@@ -8,9 +8,7 @@ export default class ListCurrencyies {
         this.initElements();
         this.initEvents();
     }
-
-  
-    
+ 
     initElements() {
 
         this.$els = {
@@ -23,6 +21,7 @@ export default class ListCurrencyies {
 
         this.getItems();
     }
+
     getItems() {
 
         var settings = {
@@ -43,14 +42,10 @@ export default class ListCurrencyies {
         });
     }
 
-   
-
     renderItems(item) {
 
         var rendered = Items(item);
         $('.side_menu').append(rendered);
 
     }
-
-
 }

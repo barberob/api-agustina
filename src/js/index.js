@@ -6,8 +6,9 @@ import Search from './Search';
 
 
 class App {
-  
+
     constructor () {
+      
         this.initApp();      
     }
 

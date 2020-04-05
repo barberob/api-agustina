@@ -42,7 +42,6 @@ export default class Search {
                     $(this).css('display','flex');
                 }
             });
-
         });
 
         $('body').on('click', '.js-list_item',() => {

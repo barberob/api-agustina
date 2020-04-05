@@ -31,7 +31,6 @@ export default class Behavior {
 
     toggleMenu() {
 
-        
         this.$els.button_container.click(() => {
             
             if (bool_open == false) {
@@ -49,7 +48,6 @@ export default class Behavior {
                 bool_open = false;
             }    
         });
-
 
         $('body').on('click','.js-list_item', () => {
 
